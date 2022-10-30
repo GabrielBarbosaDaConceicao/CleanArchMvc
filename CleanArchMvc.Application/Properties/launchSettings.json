@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "CleanArchMvc.Application": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:57253;http://localhost:57254"
+    }
+  }
+}

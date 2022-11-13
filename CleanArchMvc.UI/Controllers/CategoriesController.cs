@@ -74,15 +74,24 @@ namespace CleanArchMvc.WebUI.Controllers
 
 
         [HttpGet]
-        public IActionResult Details()
+        public async Task<IActionResult> Delete(int? id)
         {
-            return View();
+            if (id == null)
+                return NotFound();
+            
+            var categoryDTO = await _categoryService.GetById(id);
+
+            if (categoryDTO == null)
+                return NotFound();
+      
+            return View(categoryDTO);
         }
 
-        [HttpDelete]
-        public IActionResult Delete()
+        [HttpPost(), ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            return View();
+            await _categoryService.Remove(id);
+            return RedirectToAction("Index");
         }
     }
 }

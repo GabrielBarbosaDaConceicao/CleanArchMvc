@@ -2,6 +2,7 @@
 using CleanArchMvc.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace CleanArchMvc.WebUI.Controllers
 {
@@ -70,6 +71,27 @@ namespace CleanArchMvc.WebUI.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(productDTO);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+                return NotFound();
+
+            var productDTO = await _productService.GetById(id);
+
+            if (productDTO == null)
+                return NotFound();
+
+            return View(productDTO);
+        }
+
+        [HttpPost(), ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            await _productService.Remove(id);
+            return RedirectToAction("Index");
         }
 
     }
